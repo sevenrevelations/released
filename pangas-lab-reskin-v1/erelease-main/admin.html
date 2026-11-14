@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>pangas.lab Admin</title>
+  <meta name="theme-color" content="#080a12">
+  <link rel="stylesheet" href="./admin/admin.css?v=keyless-20261109-1">
+  <script src="./config.js?v=keyless-20261109-1"></script>
+  <script type="module" src="./admin/admin.js?v=keyless-20261109-1"></script>
+</head>
+<body>
+  <main class="page">
+    <section id="loginView" class="auth-card">
+      <div class="brand"><span></span>pangas.lab</div>
+      <p class="eyebrow">Administrator</p>
+      <h1>Announcements</h1>
+      <p class="muted">Sign in to publish and manage notices shown across pangas.lab.</p>
+      <form id="loginForm" class="stack">
+        <label>Email<input id="email" type="email" autocomplete="username" required></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+        <button id="loginButton" class="primary" type="submit">Sign in</button>
+        <p id="loginError" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <header class="topbar">
+        <div><div class="brand"><span></span>pangas.lab</div><small>Admin</small></div>
+        <div class="top-actions"><span id="adminEmail"></span><button id="logoutButton" type="button">Sign out</button></div>
+      </header>
+      <div class="hero-row">
+        <div><p class="eyebrow">Global announcements</p><h1>Updates for everyone</h1><p class="muted">Publish notices, maintenance messages, and optional update links across pangas.lab.</p></div>
+        <button id="newGlobalAnnouncement" class="primary" type="button">+ New announcement</button>
+      </div>
+      <div class="toolbar" style="grid-template-columns:1fr auto">
+        <p id="globalAnnouncementStatus" class="muted status" role="status"></p>
+        <button id="refreshButton" type="button">Refresh</button>
+      </div>
+      <div id="globalAnnouncementList" class="ga-admin-list"></div>
+    </section>
+  </main>
+
+  <dialog id="globalAnnouncementDialog">
+    <form id="globalAnnouncementForm" class="dialog-card wide">
+      <header><div><p class="eyebrow">Global notice</p><h2 id="gaDialogTitle">New announcement</h2></div><button class="icon" value="cancel" formmethod="dialog" aria-label="Close">×</button></header>
+      <input id="gaId" type="hidden">
+      <div class="ga-form-grid">
+        <label class="ga-span-2">Title<input id="gaTitle" maxlength="120" required placeholder="pangas.lab update available"></label>
+        <label class="ga-span-2">Message<textarea id="gaMessage" maxlength="2000" rows="5" required placeholder="Tell users what changed and what they should know."></textarea></label>
+        <label>Type<select id="gaType"><option value="general">General</option><option value="update">Update</option><option value="maintenance">Maintenance</option><option value="important">Important</option></select></label>
+        <label>Display<select id="gaDisplay"><option value="popup">Popup</option><option value="banner">Banner</option></select></label>
+        <label>Version label<input id="gaVersion" maxlength="40" placeholder="1.6 (optional)"></label>
+        <label>Button text<input id="gaLinkLabel" maxlength="60" value="Copy update link" placeholder="Copy update link"></label>
+        <label class="ga-span-2">Update/document link<input id="gaLinkUrl" type="url" placeholder="https://..."></label>
+        <label>Starts<input id="gaStarts" type="datetime-local"></label>
+        <label>Ends <span class="muted">(optional)</span><input id="gaEnds" type="datetime-local"></label>
+        <label class="ga-active-row"><input id="gaActive" type="checkbox" checked> Published / active</label>
+      </div>
+      <p id="gaError" class="error" role="alert"></p>
+      <footer><button value="cancel" formmethod="dialog">Cancel</button><button id="gaSave" class="primary" type="submit">Publish</button></footer>
+    </form>
+  </dialog>
+</body>
+</html>

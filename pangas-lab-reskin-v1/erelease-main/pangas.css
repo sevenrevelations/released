@@ -1,0 +1,247 @@
+/* pangas.lab interface skin
+   Visual direction: compact layered surfaces, quiet borders, restrained motion,
+   and a stable CSS-first shell. Existing Blobby IDs/classes remain intact so
+   the feature code does not need to be rewritten. */
+
+:root{
+  --p-bg-0:var(--bg);
+  --p-bg-1:color-mix(in srgb,var(--bg2) 64%,var(--bg));
+  --p-bg-2:color-mix(in srgb,var(--panel) 88%,var(--bg));
+  --p-bg-3:color-mix(in srgb,var(--panel2) 88%,var(--panel));
+  --p-bg-4:color-mix(in srgb,var(--panel2) 76%,var(--ink) 3%);
+  --p-border:color-mix(in srgb,var(--line) 74%,transparent);
+  --p-border-soft:color-mix(in srgb,var(--line) 48%,transparent);
+  --p-border-faint:color-mix(in srgb,var(--line) 28%,transparent);
+  --p-text:var(--ink);
+  --p-muted:var(--muted);
+  --p-accent:var(--accent);
+  --p-r1:5px;
+  --p-r2:7px;
+  --p-r3:10px;
+  --p-r4:13px;
+  --p-shadow:0 18px 55px rgba(0,0,0,.28);
+  --p-sidebar:56px;
+  color-scheme:dark;
+}
+
+html,body{background:var(--p-bg-0);color:var(--p-text)}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;letter-spacing:-.005em}
+::selection{background:color-mix(in srgb,var(--p-accent) 32%,transparent);color:var(--p-text)}
+
+/* Keep the base interface calm even when optional backgrounds/effects are enabled. */
+.background-layer{background:var(--custom-background, var(--p-bg-0))}
+.ambient-layer{opacity:.24}
+html[data-glass="true"] .ambient-layer{opacity:.36}
+
+/* CSS-first layout fallback. These declarations match the default grid so a JS
+   startup error cannot collapse every widget into the first row. */
+#topbar{grid-column:15 / span 6;grid-row:1 / span 1}
+#heroBlock{grid-column:3 / span 7;grid-row:3 / span 2}
+#clockBlock{grid-column:16 / span 3;grid-row:3 / span 2}
+#addressbarBlock{grid-column:3 / span 11;grid-row:6 / span 1}
+#shortcutsBlock{grid-column:3 / span 11;grid-row:8 / span 5}
+#recentBlock{grid-column:15 / span 4;grid-row:6 / span 7}
+#previewBlock{grid-column:3 / span 16;grid-row:14 / span 1}
+
+/* Main shell */
+.app-shell{
+  min-height:680px;
+  height:max(100svh,680px);
+  padding:28px 30px 28px calc(var(--p-sidebar) + 30px);
+  gap:10px;
+}
+.shell-block{border-radius:var(--p-r3)}
+
+/* Product rail */
+.blobby-sidebar-rail{
+  width:var(--p-sidebar);
+  padding:48px 7px 10px;
+  gap:3px;
+  border-right:1px solid var(--p-border-soft);
+  background:color-mix(in srgb,var(--p-bg-1) 96%,transparent);
+  box-shadow:none;
+}
+.blobby-sidebar-brand{
+  top:8px;left:8px;width:40px;height:32px;
+  color:var(--p-text);font-size:14px;font-weight:760;
+}
+.blobby-sidebar-brand span{
+  width:30px;height:30px;border:1px solid var(--p-border);
+  border-radius:var(--p-r2);background:var(--p-bg-3);
+  color:var(--p-accent);box-shadow:inset 0 1px rgba(255,255,255,.025);
+}
+.blobby-sidebar-button,.blobby-sidebar-close{
+  width:40px;height:36px;min-height:36px;border-radius:var(--p-r2);color:var(--p-muted);
+}
+.blobby-sidebar-button:hover,.blobby-sidebar-brand:hover,.blobby-sidebar-close:hover{background:var(--p-bg-3);color:var(--p-text)}
+.blobby-sidebar-button[data-active="true"]{background:var(--p-bg-3);color:var(--p-text)}
+.blobby-sidebar-button[data-active="true"]::before{left:-7px;top:9px;width:2px;height:18px;border-radius:0 2px 2px 0;background:var(--p-accent)}
+.blobby-sidebar-separator{width:24px;background:var(--p-border-faint);margin:4px 0}
+.blobby-sidebar-panel{left:var(--p-sidebar);width:min(344px,calc(100vw - var(--p-sidebar)));grid-template-rows:56px minmax(0,1fr);background:var(--p-bg-2);border-right:1px solid var(--p-border);box-shadow:20px 0 60px rgba(0,0,0,.25)}
+.blobby-sidebar-panel-head{min-height:56px;padding:9px 10px 9px 14px;border-bottom:1px solid var(--p-border-soft)}
+.blobby-sidebar-heading h2{font-size:13px;font-weight:650;letter-spacing:-.018em}
+.blobby-sidebar-eyebrow{font-size:8px;letter-spacing:.105em;color:var(--p-muted)}
+.blobby-sidebar-panel-body{padding:12px 10px;gap:10px}
+.blobby-sidebar-intro{grid-template-columns:32px minmax(0,1fr);padding:3px 4px 13px;border-bottom-color:var(--p-border-soft)}
+.blobby-sidebar-intro>.blobby-sidebar-icon{border-color:var(--p-border);background:var(--p-bg-3);border-radius:var(--p-r2)}
+.blobby-sidebar-status-card{min-height:44px;border-radius:var(--p-r2);padding:6px 7px}
+.blobby-sidebar-status-card:hover{background:var(--p-bg-3)}
+
+@media(hover:hover) and (pointer:fine){
+  .blobby-sidebar-brand::after,.blobby-sidebar-button::after{
+    left:48px;padding:5px 8px;border:1px solid var(--p-border);border-radius:var(--p-r2);
+    background:var(--p-bg-3);box-shadow:0 10px 28px rgba(0,0,0,.3);font-size:10px;
+  }
+}
+
+/* Utility/status block becomes a quiet chrome cluster. */
+.utility-card{padding:0 2px;gap:10px;align-self:start}
+.utility-status{font-size:10px;color:var(--p-muted)}
+.status-dot{width:6px;height:6px;background:var(--p-muted)}
+.mode-chip{height:22px;display:inline-flex;align-items:center;padding:0 7px;border:1px solid var(--p-border);border-radius:999px;background:var(--p-bg-2);font-size:9px}
+.topbar-actions{padding:2px;border:1px solid var(--p-border-soft);border-radius:var(--p-r2);background:var(--p-bg-2)}
+.icon-button,.nav-button{border-radius:var(--p-r2)}
+.icon-button:hover,.nav-button:hover{background:var(--p-bg-3)}
+
+/* Brand / start page */
+.hero-card{align-items:flex-end;padding:0 0 10px}
+.hero-card h1{font-size:clamp(2.4rem,4.3vw,4.65rem);font-weight:720;letter-spacing:-.075em;line-height:.88;color:var(--p-text)}
+.hero-card h1 span{color:var(--p-accent);font-weight:690}
+.hero-card p{margin-top:10px;font-size:11px;color:var(--p-muted);letter-spacing:0}
+.clock-card{padding:0 0 10px;gap:3px;align-items:flex-end;text-align:right}
+.clock-card strong{font-size:1.8rem;font-weight:610;letter-spacing:-.055em}
+.clock-card span{font-size:10px}
+
+/* Omnibox / browser chrome */
+.address-block{overflow:visible;border-radius:var(--p-r3)}
+.address-form{gap:6px}
+.omnibox-wrap{min-height:42px}
+.omnibox{
+  min-height:42px;height:42px;border:1px solid var(--p-border);border-radius:var(--p-r3);
+  background:var(--p-bg-2);padding:0 38px;color:var(--p-text);font-size:12.5px;
+  box-shadow:inset 0 1px rgba(255,255,255,.018),0 1px 1px rgba(0,0,0,.12);
+}
+.omnibox-wrap:focus-within .omnibox{border-color:color-mix(in srgb,var(--p-accent) 48%,var(--p-border));background:var(--p-bg-3);box-shadow:0 0 0 3px color-mix(in srgb,var(--p-accent) 8%,transparent)}
+.omnibox-icon{left:12px}.omnibox-clear{right:7px;border-radius:var(--p-r2)}
+.nav-button{width:34px;height:34px;color:var(--p-muted)}
+.go-button,.primary-button{height:34px;border-radius:var(--p-r2);background:var(--p-accent);color:#071018;font-weight:700;box-shadow:none}
+.go-button:hover,.primary-button:hover{background:color-mix(in srgb,var(--p-accent) 88%,white)}
+html[data-base-ui-mode="home"] #addressbarBlock .omnibox,html[data-base-ui-mode="home"] #addressbarBlock .omnibox-wrap{height:44px;min-height:44px}
+html[data-base-ui-mode="home"] #addressbarBlock .go-button{height:44px;min-width:44px}
+
+.browser-tabs{height:36px;border-bottom:1px solid var(--p-border-soft);background:var(--p-bg-1);padding:4px 6px 0}
+.browser-tab{border:0!important;border-radius:var(--p-r2) var(--p-r2) 0 0!important;background:transparent!important;color:var(--p-muted)!important}
+.browser-tab:hover{background:var(--p-bg-3)!important;color:var(--p-text)!important}
+.browser-tab[aria-selected="true"],.browser-tab[data-active="true"]{background:var(--p-bg-2)!important;color:var(--p-text)!important}
+.new-tab-button{border-radius:var(--p-r2)!important;color:var(--p-muted)!important}
+.bookmarks-bar{border-bottom:1px solid var(--p-border-soft)!important;background:var(--p-bg-2)!important}
+.browser-menu,.bookmark-folder-menu{border:1px solid var(--p-border)!important;border-radius:var(--p-r3)!important;background:var(--p-bg-3)!important;box-shadow:var(--p-shadow)!important}
+.browser-menu button:hover,.bookmark-folder-menu button:hover{background:var(--p-bg-4)!important}
+
+/* Home content is grouped by surface hierarchy, not decorative cards. */
+.panel-card{padding:12px 13px 10px;border:1px solid var(--p-border-soft);border-radius:var(--p-r3);background:color-mix(in srgb,var(--p-bg-2) 84%,transparent)}
+.section-head{margin:0 0 7px;padding:0 1px 8px;border-bottom:1px solid var(--p-border-faint)}
+.eyebrow{font-size:8px;letter-spacing:.105em;color:var(--p-muted)}
+.section-head h2,.preview-card h2{font-size:12px;font-weight:640}
+.text-button{font-size:10px;border-radius:var(--p-r2)}
+.text-button:hover{background:var(--p-bg-3)}
+.shortcut-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:3px}
+.shortcut-tile{min-height:48px;padding:7px 8px;border-radius:var(--p-r2)}
+.shortcut-tile:hover{background:var(--p-bg-3)}
+.shortcut-icon{width:30px;height:30px;border:1px solid var(--p-border-soft);border-radius:var(--p-r2);background:var(--p-bg-3);color:var(--p-accent)}
+.shortcut-name{font-size:11px;font-weight:590}
+.recent-row{border-radius:var(--p-r2)}
+.recent-row:hover{background:var(--p-bg-3)}
+.recent-main{padding:7px 6px}.recent-main strong{font-size:11px}.recent-main small,.recent-row time{font-size:9px}
+.preview-card{padding:10px 12px;border:1px solid var(--p-border-soft);border-radius:var(--p-r3);background:var(--p-bg-2)}
+.preview-icon{border-color:var(--p-border);background:var(--p-bg-3)}
+
+/* Dialogs / settings */
+.settings-dialog,.small-dialog,.command-dialog{border:1px solid var(--p-border);border-radius:var(--p-r4)!important;background:var(--p-bg-2);box-shadow:var(--p-shadow)}
+.settings-dialog::backdrop,.small-dialog::backdrop,.command-dialog::backdrop{background:rgba(1,3,9,.7);backdrop-filter:blur(2px)}
+.settings-shell{background:var(--p-bg-2);border-radius:inherit;grid-template-rows:58px 1fr 48px}
+.settings-header,.settings-footer{border-color:var(--p-border-soft);padding:0 16px}
+.settings-header h2{font-size:14px;font-weight:650}
+.settings-search-wrap input{height:34px;border:1px solid var(--p-border);border-radius:var(--p-r2);background:var(--p-bg-1);font-size:11px}
+.settings-body{grid-template-columns:190px 1fr}
+.settings-nav{padding:12px 9px;border-right:1px solid var(--p-border-soft);background:var(--p-bg-1);gap:2px}
+.settings-nav-button{min-height:34px;padding:8px 10px;border-radius:var(--p-r2);font-size:11px;color:var(--p-muted)}
+.settings-nav-button:hover{background:var(--p-bg-3);color:var(--p-text)}
+.settings-nav-button[aria-current="true"]{background:var(--p-bg-3);color:var(--p-text)}
+.settings-nav-button[aria-current="true"]::before{left:0;top:8px;bottom:8px;width:2px;background:var(--p-accent)}
+.settings-panels{padding:28px 34px 40px}
+.settings-title{font-size:18px;font-weight:660;margin-bottom:26px}
+.setting-group{margin-bottom:28px}
+.setting-group h4{font-size:12px}.setting-help{font-size:10px;color:var(--p-muted)}
+.setting-row{min-height:50px;border-top:1px solid var(--p-border-faint);font-size:11px}
+.setting-copy strong{font-size:11px}.setting-copy small{font-size:9.5px}
+.settings-panels input:not([type="checkbox"]),.settings-panels select,.settings-panels textarea,.dialog-content input,.dialog-content select,.dialog-content textarea{
+  border:1px solid var(--p-border)!important;border-radius:var(--p-r2)!important;background:var(--p-bg-1)!important;color:var(--p-text)!important;box-shadow:none!important;
+}
+.theme-card,.layout-card,.saved-item,.bridge-card,.performance-note{border-color:var(--p-border-soft)!important;background:var(--p-bg-1)!important;border-radius:var(--p-r2)!important;box-shadow:none!important}
+.theme-card:hover,.layout-card:hover{background:var(--p-bg-3)!important}
+.command-shell,.dialog-content{background:var(--p-bg-2)!important;border-radius:inherit}
+.command-search{border-bottom:1px solid var(--p-border-soft)!important}
+.command-list button:hover,.command-list button[aria-selected="true"]{background:var(--p-bg-3)!important}
+
+/* Social and media panels: use the same layered shell so they feel like one app. */
+.blobby-chat-panel,.blobby-dm-panel,.blobby-group-panel,.blobby-profile-panel,.blobby-music-panel,.blobby-leaderboard-panel{
+  border:1px solid var(--p-border)!important;border-radius:var(--p-r4)!important;background:var(--p-bg-2)!important;box-shadow:var(--p-shadow)!important;
+}
+.blobby-chat-windowbar,.blobby-chat-channels,.blobby-chat-members,.blobby-chat-composer,.blobby-dm-sidebar,.blobby-group-sidebar{
+  background:var(--p-bg-1)!important;border-color:var(--p-border-soft)!important;
+}
+.blobby-chat-topbar,.blobby-chat-roombar,.blobby-chat-members-head,.blobby-dm-head,.blobby-group-head,.blobby-profile-head,.blobby-music-head,.blobby-leaderboard-head{
+  border-color:var(--p-border-soft)!important;background:var(--p-bg-2)!important;
+}
+.blobby-chat-channel,.blobby-chat-online-user,.blobby-chat-mini-btn,.blobby-chat-tool,.blobby-chat-icon-btn,.blobby-dm-conversation,.blobby-group-conversation{
+  border-radius:var(--p-r2)!important;
+}
+.blobby-chat-channel:hover,.blobby-chat-online-user:hover,.blobby-chat-mini-btn:hover,.blobby-chat-tool:hover,.blobby-chat-icon-btn:hover,.blobby-dm-conversation:hover,.blobby-group-conversation:hover{
+  background:var(--p-bg-3)!important;
+}
+.blobby-chat-channel[data-active="true"],.blobby-dm-conversation[data-active="true"],.blobby-group-conversation[data-active="true"]{background:var(--p-bg-3)!important}
+.blobby-chat-input-wrap,.blobby-dm-input-wrap,.blobby-group-input-wrap{border:1px solid var(--p-border)!important;border-radius:var(--p-r3)!important;background:var(--p-bg-2)!important}
+.blobby-chat-send,.blobby-dm-send,.blobby-group-send{border-radius:var(--p-r2)!important;background:var(--p-accent)!important;color:#071018!important}
+.blobby-chat-popover,.blobby-chat-flyout,.blobby-chat-toast,.blobby-dm-popover,.blobby-group-popover{border:1px solid var(--p-border)!important;border-radius:var(--p-r3)!important;background:var(--p-bg-3)!important;box-shadow:var(--p-shadow)!important}
+.blobby-chat-announcement{background:color-mix(in srgb,var(--p-accent) 5%,transparent)!important;border-left-color:var(--p-accent)!important}
+
+/* Profiles should feel like profile pages, not neon cards. Preserve user chosen
+   profile gradients inside the actual preview/public card. */
+.bp-shell,.blobby-profile-shell{background:var(--p-bg-2)!important;border-color:var(--p-border)!important}
+.bp-sidebar,.blobby-profile-sidebar{background:var(--p-bg-1)!important;border-color:var(--p-border-soft)!important}
+.bp-form input,.bp-form textarea,.bp-form select{background:var(--p-bg-1)!important;border-color:var(--p-border)!important;border-radius:var(--p-r2)!important}
+
+/* Edit mode remains visible but no longer looks like a separate design system. */
+.drag-handle,.resize-handle{border-color:color-mix(in srgb,var(--p-accent) 44%,var(--p-border));background:var(--p-bg-3);border-radius:var(--p-r2)}
+.layout-toolbar{border:1px solid var(--p-border);border-radius:var(--p-r3);background:var(--p-bg-3);box-shadow:var(--p-shadow)}
+.layout-toolbar button{background:var(--p-bg-4)}
+
+/* Better focus treatment */
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in srgb,var(--p-accent) 65%,white);outline-offset:2px}
+
+/* Don't let legacy RGB effects repaint the whole product shell. User RGB options
+   can still affect the explicit areas already supported by the app. */
+html[data-rgb="true"][data-rgb-panels="true"] .home-widget{border-color:color-mix(in srgb,var(--p-accent) 34%,var(--p-border-soft))}
+
+@media(max-width:900px){
+  :root{--p-sidebar:52px}
+  .app-shell{padding-left:calc(var(--p-sidebar) + 20px);padding-right:18px}
+  .settings-body{grid-template-columns:168px 1fr}
+}
+@media(max-width:720px){
+  :root{--p-sidebar:48px}
+  .app-shell{padding:50px 10px 12px 58px;gap:7px}
+  .blobby-sidebar-panel{left:var(--p-sidebar);width:calc(100vw - var(--p-sidebar))}
+  .blobby-sidebar-rail{width:var(--p-sidebar);padding-left:4px;padding-right:4px}
+  .panel-card{padding:10px}
+  .settings-dialog{border-radius:var(--p-r3)!important}
+  .settings-body{grid-template-columns:1fr}
+  .settings-panels{padding:20px 16px 28px}
+  .settings-nav{background:var(--p-bg-1)}
+  .blobby-chat-panel,.blobby-dm-panel,.blobby-group-panel,.blobby-profile-panel,.blobby-music-panel,.blobby-leaderboard-panel{border-radius:0!important;border:0!important}
+}
+@media(max-width:460px){
+  .hero-card h1{font-size:clamp(2.25rem,12vw,3.35rem)}
+  .shortcut-grid{grid-template-columns:1fr 1fr}
+}

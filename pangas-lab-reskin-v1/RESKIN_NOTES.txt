@@ -1,0 +1,21 @@
+pangas.lab reskin v1 — 2026-11-14
+
+Purpose
+- Keep the existing Blobby feature/backend code intact.
+- Rebrand the user-facing product from blobby.vip to pangas.lab.
+- Apply a Cherri-inspired interface system without copying Cherri source/assets.
+
+What changed
+- Added erelease-main/pangas.css as the final skin layer.
+- Reworked visual hierarchy around layered dark surfaces, quieter borders, compact controls, and consistent radii.
+- Restyled the left rail, browser chrome, homepage panels, settings, dialogs, chat/social/media shells, and edit controls.
+- Recast the default Midnight palette into a deeper blue/cyan layered theme.
+- Updated visible branding across homepage, settings, sidebar, chat, profiles, leaderboard, music, admin/test pages.
+- Kept Blobby* JS globals, blobby:* events, Supabase RPC names, SQL names, and storage/import type identifiers unchanged for compatibility.
+- Added CSS default grid positions so a JS startup failure cannot collapse the homepage into the upper-left.
+- Changed local script tags to defer while preserving order and added a new cache-buster.
+
+Deploy
+Upload the CONTENTS of erelease-main to the same location where the current site files live.
+Do not rename internal JS files/classes unless you also update every reference.
+After deployment, hard refresh the browser (Ctrl+Shift+R).
