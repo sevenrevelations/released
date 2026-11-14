@@ -1,4 +1,0 @@
-/* Touchscreen desktop correction: responsive behavior is viewport-based only. */
-@media(min-width:1041px){.blobby-chat-channels{display:flex!important}.blobby-chat-members{display:grid!important}.blobby-chat-workspace{grid-template-columns:180px minmax(0,1fr) 190px!important}.blobby-chat-core{min-width:0;width:auto}.blobby-chat-popover,.blobby-chat-toast-stack{right:200px}}
-@media(max-width:1040px) and (min-width:721px){.blobby-chat-channels{display:flex!important}.blobby-chat-members{display:none!important}.blobby-chat-core{min-width:0;width:auto}.blobby-chat-popover,.blobby-chat-toast-stack{right:14px}}
-@media(max-width:720px){.blobby-chat-workspace{grid-template-columns:1fr!important}.blobby-chat-channels,.blobby-chat-members{display:none!important}}
