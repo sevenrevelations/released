@@ -1,6 +1,6 @@
-# blobby.vip Community Chat — Keyless setup
+# pangas.lab Community Chat — Keyless setup
 
-Blobby is now keyless. Community identity uses Supabase Anonymous Auth instead of access/license keys.
+pangas.lab is now keyless. Community identity uses Supabase Anonymous Auth instead of access/license keys.
 
 ## 1) Keep your existing chat migrations
 
@@ -18,7 +18,7 @@ In **Supabase → SQL Editor**, run:
 
 This makes `chat_profiles.license_id` optional and adds the authenticated RPC `chat_keyless_bind()`.
 
-Existing profiles are preserved. If an existing anonymous-auth user already has a profile, Blobby reuses it. New users receive a basic profile automatically and can then edit it normally.
+Existing profiles are preserved. If an existing anonymous-auth user already has a profile, pangas.lab reuses it. New users receive a basic profile automatically and can then edit it normally.
 
 ## 4) Owner/admin roles
 

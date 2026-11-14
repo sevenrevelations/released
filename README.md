@@ -4,11 +4,11 @@ A performance-first customizable browser controller designed for a two-WebViewer
 
 ## What v8.2 fixes
 
-- Always starts on the **full blobby.vip homepage**, even when old tabs are restored.
+- Always starts on the **full pangas.lab homepage**, even when old tabs are restored.
 - Sends `HOME` on App Inventor startup so the real browser WebViewer is hidden immediately.
 - Tabs, browser navigation, and bookmarks appear **only in Browser Mode**.
 - Removes the old floating-tab behavior that could overlap the homepage utility bar (`Connected`, Settings, Edit Layout, etc.).
-- Home no longer destroys the current virtual tab or its history; it only changes the visible UI back to blobby.vip.
+- Home no longer destroys the current virtual tab or its history; it only changes the visible UI back to pangas.lab.
 - Uses a centralized UI state controller for Home, Browser, Settings/Layout/Command/Modal overlays.
 - Browser chrome height is still sent through `UI_HEIGHT|N` and collapses/expands automatically.
 - Hidden browser UI cannot intercept clicks.
@@ -18,12 +18,12 @@ A performance-first customizable browser controller designed for a two-WebViewer
 
 ```text
 Fresh launch
-→ full blobby.vip homepage
+→ full pangas.lab homepage
 → search / open URL
 → compact tabs + navigation + optional bookmarks
 → actual website in WebViewer_Browser
 → Home
-→ clean full-screen blobby.vip homepage
+→ clean full-screen pangas.lab homepage
 ```
 
 Restored virtual tabs remain saved in the background but do **not** force Browser Mode at startup.
@@ -32,7 +32,7 @@ Restored virtual tabs remain saved in the background but do **not** force Browse
 
 ```text
 WebViewer_UI
-└── GitHub-hosted blobby.vip
+└── GitHub-hosted pangas.lab
     ├── Home UI
     ├── Virtual tabs
     ├── Navigation chrome

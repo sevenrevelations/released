@@ -1,0 +1,20 @@
+pangas.lab Cherri-referenced reskin v2
+
+What changed from v1:
+- Replaced the old Blobby-looking visual shell instead of only recoloring it.
+- Adopted Cherri-style tiered surfaces: bg, bg-1, bg-2, bg-3, bg-4.
+- Adopted four border strengths and restrained accent use.
+- Compact browser controls and tab geometry.
+- Smaller product mark instead of a giant hero heading.
+- Flat content sections instead of a dashboard full of cards.
+- Left product rail now shows icon + tiny label, with a compact active indicator.
+- Added a subtle pointer spotlight interaction inspired by Cherri's UI behavior.
+- Settings, command palette, chat, DMs, groups, profiles, music and leaderboard use one visual grammar.
+- Drag/resize handles are hidden unless layout edit mode is active.
+- Default new-install layout changed to a cleaner centered composition.
+- Existing Blobby JS APIs/events are intentionally preserved for compatibility.
+
+Important:
+The supplied Cherri build is AGPL-3.0. This package does not include Cherri's bundled application JS,
+CSS bundle, or font binaries. The interface implementation here was written separately using the
+visible design patterns as reference.

@@ -1,10 +1,10 @@
-# Blobby keyless setup
+# pangas.lab keyless setup
 
 The web frontend no longer uses access/license keys.
 
 ## Required once for Community Chat
 
-Run `202611090001_keyless_chat.sql` in Supabase SQL Editor after your existing Blobby chat/profile migrations.
+Run `202611090001_keyless_chat.sql` in Supabase SQL Editor after your existing pangas.lab chat/profile migrations.
 
 This keeps existing profiles but allows new chat profiles without a license row. Chat identity now uses Supabase anonymous Auth. Because anonymous Auth is stored locally, clearing browser/app site data can create a new identity.
 

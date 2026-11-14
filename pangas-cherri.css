@@ -1,0 +1,305 @@
+/* pangas.lab — Cherri-referenced interface, original implementation.
+   Uses the interface ideas visible in the supplied Cherri build: tiered surfaces,
+   compact controls, quiet borders, restrained motion, and content-first panels.
+   No Cherri font binaries or bundled application code are included. */
+
+:root{
+  --bg-base:#04060f;
+  --bg-1-base:#070a17;
+  --bg-2-base:#0b0f23;
+  --bg-3-base:#11162e;
+  --bg-4-base:#181d3a;
+  --bg:var(--bg-base);
+  --bg-1:var(--bg-1-base);
+  --bg-2:var(--bg-2-base);
+  --bg-3:var(--bg-3-base);
+  --bg-4:var(--bg-4-base);
+  --accent:#6ec1ff;
+  --accent-2:#4090c5;
+  --accent-glow:#6ec1ffbd;
+  --text:#d6dbe6;
+  --text-muted:#8d94a8;
+  --bright-text:#fff;
+  --border:#b4c8ff38;
+  --border-2:#b4c8ff24;
+  --border-3:#b4c8ff17;
+  --border-4:#b4c8ff0d;
+  --chip-radius:999px;
+  --r-sm:4px;
+  --r-md:6px;
+  --r-lg:8px;
+  --r-xl:12px;
+  --rail:64px;
+  --shell-x:26px;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box;font-family:inherit}
+html,body{background:var(--bg)!important;color:var(--text);overscroll-behavior-y:none}
+body{font-family:"SF Compact Text","Segoe UI Variable Text","Segoe UI",ui-sans-serif,system-ui,sans-serif!important;font-size:13px;letter-spacing:0;-webkit-font-smoothing:antialiased}
+::selection{background:color-mix(in srgb,var(--accent) 28%,transparent);color:var(--bright-text)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-2);border:2px solid transparent;background-clip:padding-box;border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:var(--bg-4);background-clip:padding-box}
+
+/* Stop decorative effects from defining the product. Cherri treats effects as optional. */
+.background-layer{background:var(--bg)!important;filter:none!important}
+.ambient-layer{opacity:.08!important}
+html[data-effects-master="false"] .ambient-layer{display:none!important}
+html[data-glass="true"]{
+  --bg:color-mix(in srgb,var(--bg-base) 72%,transparent);
+  --bg-1:color-mix(in srgb,var(--bg-1-base) 72%,transparent);
+  --bg-2:color-mix(in srgb,var(--bg-2-base) 72%,transparent);
+  --bg-3:color-mix(in srgb,var(--bg-3-base) 72%,transparent);
+  --bg-4:color-mix(in srgb,var(--bg-4-base) 72%,transparent);
+}
+
+/* Stable default home geometry. JS can still reposition items in layout edit mode. */
+#topbar{grid-column:16 / span 5;grid-row:1 / span 1}
+#heroBlock{grid-column:5 / span 12;grid-row:3 / span 1}
+#clockBlock{grid-column:17 / span 3;grid-row:3 / span 1}
+#addressbarBlock{grid-column:5 / span 12;grid-row:5 / span 1}
+#shortcutsBlock{grid-column:5 / span 8;grid-row:7 / span 6}
+#recentBlock{grid-column:14 / span 3;grid-row:7 / span 6}
+#previewBlock{grid-column:5 / span 12;grid-row:14 / span 1}
+
+.app-shell{
+  min-height:680px!important;height:max(100svh,680px)!important;
+  padding:46px var(--shell-x) 24px calc(var(--rail) + var(--shell-x))!important;
+  gap:8px!important;isolation:isolate;
+}
+.shell-block{border-radius:var(--r-lg)!important}
+
+/* Home tab strip: thin application chrome, not a floating card. */
+html[data-base-ui-mode="home"] #browserTabs,
+html[data-base-ui-mode="home"] #browserTabs:not([hidden]){
+  left:var(--rail)!important;height:34px!important;min-height:34px!important;
+  padding:3px 7px 0!important;background:var(--bg)!important;
+  border-bottom:1px solid var(--border-4)!important;
+}
+.browser-tabs{background:var(--bg)!important;border-bottom-color:var(--border-4)!important}
+.tab-list{gap:2px!important}
+.browser-tab{
+  height:29px!important;min-width:112px!important;max-width:210px!important;
+  padding:0 7px!important;border:0!important;border-radius:var(--r-lg) var(--r-lg) 0 0!important;
+  background:transparent!important;color:var(--text-muted)!important;
+}
+.browser-tab:hover{background:var(--bg-2)!important;color:var(--text)!important}
+.browser-tab[aria-selected="true"]{background:var(--bg-2)!important;color:var(--bright-text)!important;box-shadow:inset 0 -1px var(--border-2)!important}
+.tab-title{font-size:11px!important;font-weight:500!important}
+.tab-close,.new-tab-button{border-radius:var(--r-md)!important}
+.tab-close:hover,.new-tab-button:hover{background:var(--bg-3)!important;color:var(--bright-text)!important}
+
+/* Cherri-style rail: icons plus tiny labels. */
+.blobby-sidebar-rail{
+  width:var(--rail)!important;padding:42px 6px 8px!important;gap:2px!important;
+  border-right:1px solid var(--border-4)!important;background:var(--bg)!important;box-shadow:none!important;
+}
+.blobby-sidebar-brand{top:5px!important;left:7px!important;width:50px!important;height:32px!important;font-size:13px!important}
+.blobby-sidebar-brand span{
+  width:28px!important;height:28px!important;border:0!important;border-radius:var(--r-lg)!important;
+  background:var(--bg-2)!important;color:var(--accent)!important;font-weight:750!important;
+}
+.blobby-sidebar-button{
+  width:52px!important;height:45px!important;min-height:45px!important;padding:5px 2px 3px!important;
+  display:flex!important;flex-direction:column!important;justify-content:center!important;gap:2px!important;
+  border:0!important;border-radius:var(--r-lg)!important;background:transparent!important;color:var(--text-muted)!important;
+}
+.blobby-sidebar-button::after{
+  content:attr(data-label)!important;position:static!important;opacity:1!important;visibility:visible!important;
+  transform:none!important;max-width:48px!important;padding:0!important;border:0!important;background:transparent!important;
+  box-shadow:none!important;color:inherit!important;font-size:8px!important;font-weight:500!important;line-height:10px!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;pointer-events:none!important;
+}
+.blobby-sidebar-icon,.blobby-sidebar-icon svg{width:16px!important;height:16px!important}
+.blobby-sidebar-button:hover{background:var(--bg-2)!important;color:var(--bright-text)!important}
+.blobby-sidebar-button[data-active="true"]{background:var(--bg-2)!important;color:var(--bright-text)!important}
+.blobby-sidebar-button[data-active="true"]::before{left:-6px!important;top:10px!important;width:2px!important;height:24px!important;border-radius:0 2px 2px 0!important;background:var(--accent)!important}
+.blobby-sidebar-separator{width:28px!important;background:var(--border-4)!important;margin:3px 0!important}
+.blobby-sidebar-panel{left:var(--rail)!important;width:min(330px,calc(100vw - var(--rail)))!important;background:var(--bg-1)!important;border-right:1px solid var(--border-3)!important;box-shadow:18px 0 48px #0006!important}
+.blobby-sidebar-panel-head{min-height:50px!important;border-bottom-color:var(--border-4)!important;background:var(--bg-1)!important}
+.blobby-sidebar-heading h2{font-size:13px!important;color:var(--bright-text)!important}
+.blobby-sidebar-eyebrow{font-size:8px!important;color:var(--text-muted)!important}
+.blobby-sidebar-panel-body{padding:10px!important;gap:8px!important}
+.blobby-sidebar-intro{border-bottom-color:var(--border-4)!important}
+.blobby-sidebar-intro>.blobby-sidebar-icon{background:var(--bg-2)!important;border-color:var(--border-4)!important;color:var(--accent)!important}
+.blobby-sidebar-status-card{border-radius:var(--r-lg)!important}
+.blobby-sidebar-status-card:hover{background:var(--bg-2)!important}
+
+/* The brand becomes a compact product mark, not a giant landing-page hero. */
+.hero-card{padding:0 2px!important;align-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.hero-copy{display:flex;align-items:baseline;gap:10px;min-width:0}
+.hero-card h1{margin:0!important;font-size:27px!important;line-height:1!important;letter-spacing:-.04em!important;font-weight:700!important;color:var(--bright-text)!important}
+.hero-card h1 span{color:var(--accent)!important;font-weight:650!important}
+.hero-card p{margin:0!important;font-size:10px!important;color:var(--text-muted)!important;letter-spacing:0!important}
+.clock-card{padding:0!important;justify-content:center!important;align-items:flex-end!important;text-align:right!important}
+.clock-card strong{font-size:18px!important;font-weight:600!important;color:var(--bright-text)!important}
+.clock-card span{font-size:9px!important;color:var(--text-muted)!important}
+
+/* Search / omnibox uses the same compact geometry as Cherri's browser toolbar. */
+.address-block{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.address-form{gap:5px!important}
+.omnibox-wrap{height:40px!important;min-height:40px!important}
+.omnibox{
+  height:40px!important;min-height:40px!important;padding:0 36px!important;
+  border:1px solid var(--border-4)!important;border-radius:var(--r-xl)!important;
+  background:var(--bg-2)!important;color:var(--bright-text)!important;font-size:13px!important;font-weight:400!important;
+  box-shadow:none!important;outline:none!important;
+}
+.omnibox::placeholder{color:var(--text-muted)!important}
+.omnibox-wrap:focus-within .omnibox{background:var(--bg-3)!important;border-color:var(--border-2)!important;box-shadow:none!important}
+.omnibox-icon{left:12px!important;color:var(--text-muted)!important}
+.omnibox-clear{right:7px!important;border-radius:var(--r-md)!important}
+.nav-button,.icon-button{width:32px!important;height:32px!important;min-height:32px!important;border-radius:var(--r-lg)!important;background:transparent!important;color:var(--text-muted)!important}
+.nav-button:hover,.icon-button:hover{background:var(--bg-3)!important;color:var(--bright-text)!important;transform:none!important}
+.go-button,.primary-button{
+  height:40px!important;min-height:40px!important;padding:0 13px!important;border:0!important;border-radius:var(--r-xl)!important;
+  background:var(--accent)!important;color:#05070b!important;font-size:12px!important;font-weight:600!important;box-shadow:none!important;
+}
+.go-button:hover,.primary-button:hover{opacity:.9!important;filter:none!important;transform:none!important}
+html[data-base-ui-mode="home"] #addressbarBlock .omnibox,
+html[data-base-ui-mode="home"] #addressbarBlock .omnibox-wrap,
+html[data-base-ui-mode="home"] #addressbarBlock .go-button{height:40px!important;min-height:40px!important}
+
+/* Utility actions sit directly on the page instead of inside another pill/card. */
+.utility-card{padding:0!important;gap:8px!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.utility-status{font-size:9px!important;color:var(--text-muted)!important}
+.status-dot{width:5px!important;height:5px!important;background:var(--text-muted)!important}
+.mode-chip{height:20px!important;padding:0 6px!important;border:1px solid var(--border-4)!important;border-radius:var(--chip-radius)!important;background:var(--bg-2)!important;font-size:8px!important}
+.topbar-actions{padding:0!important;border:0!important;background:transparent!important;gap:1px!important}
+
+/* Content surfaces: mostly flat. Depth comes from bg tiers, not floating cards. */
+.panel-card{
+  padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+.section-head{margin:0 0 7px!important;padding:0 2px 8px!important;border-bottom:1px solid var(--border-4)!important;align-items:center!important}
+.eyebrow{font-size:8px!important;font-weight:600!important;letter-spacing:.08em!important;color:var(--text-muted)!important}
+.section-head h2,.preview-card h2{font-size:13px!important;font-weight:600!important;color:var(--bright-text)!important;letter-spacing:-.01em!important}
+.text-button{min-height:26px!important;padding:0 7px!important;border-radius:var(--r-md)!important;color:var(--text-muted)!important;font-size:10px!important}
+.text-button:hover{background:var(--bg-2)!important;color:var(--bright-text)!important}
+
+.shortcut-grid{grid-template-columns:repeat(auto-fill,minmax(136px,1fr))!important;gap:4px!important;padding:0!important}
+.shortcut-folder{padding:10px 6px 4px!important;font-size:8px!important;color:var(--text-muted)!important;letter-spacing:.08em!important}
+.shortcut-tile{
+  position:relative;isolation:isolate;overflow:hidden;min-height:46px!important;padding:6px 7px!important;
+  grid-template-columns:28px minmax(0,1fr)!important;gap:8px!important;border:1px solid transparent!important;
+  border-radius:var(--r-lg)!important;background:transparent!important;color:var(--text)!important;
+}
+.shortcut-tile:hover{background:var(--bg-2)!important;border-color:var(--border-4)!important;transform:none!important}
+.shortcut-icon{width:28px!important;height:28px!important;border:1px solid var(--border-4)!important;border-radius:var(--r-lg)!important;background:var(--bg-2)!important;color:var(--accent)!important;font-size:10px!important}
+.shortcut-name{font-size:11px!important;font-weight:500!important;color:var(--text)!important}
+
+.recent-list{gap:1px!important}
+.recent-row{border-radius:var(--r-lg)!important;padding:0!important}
+.recent-row:hover{background:var(--bg-2)!important}
+.recent-main{padding:7px!important}
+.recent-main strong{font-size:10.5px!important;font-weight:500!important;color:var(--text)!important}
+.recent-main small,.recent-row time{font-size:8.5px!important;color:var(--text-muted)!important}
+.preview-card{padding:8px 10px!important;border:1px solid var(--border-4)!important;border-radius:var(--r-lg)!important;background:var(--bg-1)!important;box-shadow:none!important}
+.preview-icon{width:28px!important;height:28px!important;border:0!important;border-radius:var(--r-lg)!important;background:var(--bg-2)!important;color:var(--text-muted)!important}
+.preview-card p{font-size:9px!important;color:var(--text-muted)!important}
+
+/* Cherri's subtle pointer spotlight, original implementation. */
+.pangas-spot{position:relative;isolation:isolate;overflow:hidden}
+.pangas-spot::after{
+  content:"";position:absolute;z-index:-1;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(220px circle at var(--spot-x,50%) var(--spot-y,50%),color-mix(in srgb,var(--accent) 12%,transparent),transparent 68%);
+  transition:opacity .16s ease;
+}
+.pangas-spot:hover::after{opacity:1}
+
+/* Browser mode mirrors Cherri's compact toolbar proportions. */
+html[data-app-mode="true"][data-browser-active="true"] #browserTabs{height:34px!important;flex-basis:34px!important;background:var(--bg)!important}
+html[data-app-mode="true"][data-browser-active="true"] #addressbarBlock{height:40px!important;min-height:40px!important;flex-basis:40px!important;padding:3px 6px!important;background:var(--bg)!important;border-bottom:1px solid var(--border-4)!important}
+html[data-app-mode="true"][data-browser-active="true"] .address-form{height:34px!important;gap:2px!important}
+html[data-app-mode="true"][data-browser-active="true"] .omnibox-wrap,
+html[data-app-mode="true"][data-browser-active="true"] .omnibox{height:32px!important;min-height:32px!important}
+html[data-app-mode="true"][data-browser-active="true"] .omnibox{border-radius:var(--r-lg)!important;background:var(--bg-2)!important;border-color:var(--border-4)!important;font-size:12px!important}
+html[data-app-mode="true"][data-browser-active="true"] .nav-button{width:30px!important;height:32px!important}
+.bookmarks-bar{background:var(--bg)!important;border-bottom-color:var(--border-4)!important}
+.bookmark-item,.bookmark-folder,.bookmark-add{border-radius:var(--r-md)!important;font-size:10px!important}
+.bookmark-item:hover,.bookmark-folder:hover,.bookmark-add:hover{background:var(--bg-2)!important}
+.browser-menu,.bookmark-folder-menu{border:1px solid var(--border-3)!important;border-radius:var(--r-xl)!important;background:var(--bg-2)!important;box-shadow:0 20px 50px #0008!important}
+.browser-menu button:hover,.bookmark-folder-menu button:hover{background:var(--bg-3)!important}
+
+/* Dialogs and command palette */
+.settings-dialog,.small-dialog,.command-dialog{
+  border:1px solid var(--border-3)!important;border-radius:var(--r-xl)!important;background:var(--bg-1)!important;color:var(--text)!important;
+  box-shadow:0 20px 60px #0009!important;
+}
+.settings-dialog::backdrop,.small-dialog::backdrop,.command-dialog::backdrop{background:#0009!important;backdrop-filter:blur(3px)}
+.settings-shell{background:var(--bg-1)!important;grid-template-rows:52px 1fr 44px!important}
+.settings-header,.settings-footer{border-color:var(--border-4)!important;padding:0 14px!important}
+.settings-header h2{font-size:14px!important;font-weight:600!important;color:var(--bright-text)!important}
+.settings-search-wrap input{height:32px!important;border:1px solid var(--border-4)!important;border-radius:var(--r-lg)!important;background:var(--bg-2)!important;color:var(--bright-text)!important;font-size:11px!important}
+.settings-body{grid-template-columns:184px 1fr!important}
+.settings-nav{padding:10px 7px!important;gap:1px!important;border-right:1px solid var(--border-4)!important;background:var(--bg)!important}
+.settings-nav-button{min-height:32px!important;padding:7px 9px!important;border-radius:var(--r-lg)!important;color:var(--text-muted)!important;font-size:10.5px!important}
+.settings-nav-button:hover,.settings-nav-button[aria-current="true"]{background:var(--bg-2)!important;color:var(--bright-text)!important}
+.settings-nav-button[aria-current="true"]::before{background:var(--accent)!important}
+.settings-panels{padding:24px 30px 38px!important}
+.settings-title{font-size:18px!important;font-weight:650!important;color:var(--bright-text)!important;margin-bottom:22px!important}
+.setting-group{margin-bottom:24px!important}
+.setting-group h4{font-size:11px!important;color:var(--bright-text)!important}
+.setting-help{font-size:9.5px!important;color:var(--text-muted)!important}
+.setting-row{min-height:48px!important;border-top-color:var(--border-4)!important;font-size:10.5px!important}
+.settings-panels input:not([type="checkbox"]),.settings-panels select,.settings-panels textarea,
+.dialog-content input,.dialog-content select,.dialog-content textarea{
+  border:1px solid var(--border-4)!important;border-radius:var(--r-lg)!important;background:var(--bg-2)!important;color:var(--bright-text)!important;box-shadow:none!important;
+}
+.theme-card,.layout-card,.saved-item,.bridge-card,.performance-note{border:1px solid var(--border-4)!important;border-radius:var(--r-lg)!important;background:var(--bg-2)!important;box-shadow:none!important}
+.theme-card:hover,.layout-card:hover{background:var(--bg-3)!important;transform:none!important}
+.command-shell,.dialog-content{background:var(--bg-1)!important;border-radius:inherit!important}
+.command-search{border-bottom-color:var(--border-4)!important}
+.command-list button:hover,.command-list button[aria-selected="true"]{background:var(--bg-2)!important}
+
+/* Social/product panels use one surface grammar. */
+.blobby-chat-panel,.blobby-dm-panel,.blobby-group-panel,.blobby-profile-panel,.blobby-music-panel,.blobby-leaderboard-panel{
+  border:1px solid var(--border-3)!important;border-radius:var(--r-xl)!important;background:var(--bg-1)!important;box-shadow:0 20px 60px #0009!important;
+}
+.blobby-chat-windowbar,.blobby-chat-channels,.blobby-chat-members,.blobby-chat-composer,.blobby-dm-sidebar,.blobby-group-sidebar,
+.bp-sidebar,.blobby-profile-sidebar{background:var(--bg)!important;border-color:var(--border-4)!important}
+.blobby-chat-topbar,.blobby-chat-roombar,.blobby-chat-members-head,.blobby-dm-head,.blobby-group-head,.blobby-profile-head,.blobby-music-head,.blobby-leaderboard-head{
+  background:var(--bg-1)!important;border-color:var(--border-4)!important;
+}
+.blobby-chat-channel,.blobby-chat-online-user,.blobby-chat-mini-btn,.blobby-chat-tool,.blobby-chat-icon-btn,.blobby-dm-conversation,.blobby-group-conversation{border-radius:var(--r-lg)!important}
+.blobby-chat-channel:hover,.blobby-chat-online-user:hover,.blobby-chat-mini-btn:hover,.blobby-chat-tool:hover,.blobby-chat-icon-btn:hover,.blobby-dm-conversation:hover,.blobby-group-conversation:hover{background:var(--bg-2)!important}
+.blobby-chat-channel[data-active="true"],.blobby-dm-conversation[data-active="true"],.blobby-group-conversation[data-active="true"]{background:var(--bg-2)!important}
+.blobby-chat-input-wrap,.blobby-dm-input-wrap,.blobby-group-input-wrap{border:1px solid var(--border-4)!important;border-radius:var(--r-xl)!important;background:var(--bg-2)!important}
+.blobby-chat-send,.blobby-dm-send,.blobby-group-send{border-radius:var(--r-lg)!important;background:var(--accent)!important;color:#05070b!important;box-shadow:none!important}
+.blobby-chat-popover,.blobby-chat-flyout,.blobby-chat-toast,.blobby-dm-popover,.blobby-group-popover{border:1px solid var(--border-3)!important;border-radius:var(--r-xl)!important;background:var(--bg-2)!important;box-shadow:0 18px 48px #0008!important}
+.bp-shell,.blobby-profile-shell{background:var(--bg-1)!important;border-color:var(--border-3)!important}
+.bp-form input,.bp-form textarea,.bp-form select{background:var(--bg-2)!important;border-color:var(--border-4)!important;border-radius:var(--r-lg)!important}
+
+/* Layout controls exist only while actually editing. */
+.drag-handle,.resize-handle{display:none!important}
+.app-shell[data-layout-editing="true"] .drag-handle,.app-shell[data-layout-editing="true"] .resize-handle{display:grid!important;border:1px solid var(--border-2)!important;border-radius:var(--r-md)!important;background:var(--bg-3)!important;color:var(--text)!important}
+.layout-toolbar{border:1px solid var(--border-3)!important;border-radius:var(--r-xl)!important;background:var(--bg-2)!important;box-shadow:0 16px 48px #0008!important}
+.layout-toolbar button{background:var(--bg-3)!important;border-radius:var(--r-lg)!important}
+
+button,input,select,textarea{font:inherit}
+button{transition:background-color .15s ease,color .15s ease,border-color .15s ease,opacity .15s ease}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 72%,white);outline-offset:2px}
+
+@media(max-width:900px){
+  :root{--rail:58px;--shell-x:18px}
+  .blobby-sidebar-button{width:46px!important}
+  .app-shell{padding-left:calc(var(--rail) + var(--shell-x))!important}
+  .settings-body{grid-template-columns:164px 1fr!important}
+}
+@media(max-width:720px){
+  :root{--rail:50px;--shell-x:10px}
+  .app-shell{padding:46px 10px 12px 60px!important;gap:7px!important}
+  .blobby-sidebar-button{width:40px!important;height:40px!important;min-height:40px!important}
+  .blobby-sidebar-button::after{display:none!important}
+  .blobby-sidebar-panel{left:var(--rail)!important;width:calc(100vw - var(--rail))!important}
+  .hero-copy{display:block}.hero-card p{margin-top:4px!important}
+  .settings-body{grid-template-columns:1fr!important}.settings-panels{padding:18px 15px 26px!important}
+  .blobby-chat-panel,.blobby-dm-panel,.blobby-group-panel,.blobby-profile-panel,.blobby-music-panel,.blobby-leaderboard-panel{border-radius:0!important;border:0!important}
+}
+@media(max-width:480px){
+  .hero-card h1{font-size:23px!important}
+  .shortcut-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pangas-spot::after{display:none!important}}

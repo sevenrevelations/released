@@ -30,7 +30,7 @@ const defaultLayoutGrid={
 };
 const layoutPresets={
  minimal:{name:'Minimal',grid:{topbar:{col:15,row:1,w:6,h:1},hero:{col:3,row:3,w:7,h:2},clock:{col:16,row:3,w:3,h:2},addressbar:{col:3,row:6,w:11,h:1},shortcuts:{col:3,row:8,w:11,h:5},recent:{col:15,row:6,w:4,h:7},preview:{col:3,row:14,w:16,h:1}},hidden:['clock','preview']},
- centered:{name:'Centered',grid:{topbar:{col:16,row:1,w:5,h:1},hero:{col:6,row:2,w:10,h:2},clock:{col:9,row:4,w:4,h:2},addressbar:{col:4,row:6,w:14,h:1},shortcuts:{col:5,row:8,w:12,h:3},recent:{col:6,row:11,w:10,h:2},preview:{col:5,row:13,w:12,h:2}},hidden:['preview']},
+ centered:{name:'Centered',grid:{topbar:{col:16,row:1,w:5,h:1},hero:{col:5,row:3,w:12,h:1},clock:{col:17,row:3,w:3,h:1},addressbar:{col:5,row:5,w:12,h:1},shortcuts:{col:5,row:7,w:8,h:6},recent:{col:14,row:7,w:3,h:6},preview:{col:5,row:14,w:12,h:1}},hidden:['clock','preview']},
  compact:{name:'Compact',grid:{topbar:{col:16,row:1,w:5,h:1},hero:{col:2,row:2,w:7,h:1},clock:{col:17,row:2,w:3,h:1},addressbar:{col:3,row:4,w:16,h:1},shortcuts:{col:3,row:6,w:11,h:3},recent:{col:15,row:6,w:4,h:3},preview:{col:3,row:10,w:16,h:2}},hidden:['clock','preview']},
  floating:{name:'Floating',grid:{topbar:{col:16,row:1,w:5,h:1},hero:{col:2,row:2,w:7,h:2},clock:{col:17,row:3,w:3,h:2},addressbar:{col:5,row:5,w:12,h:1},shortcuts:{col:2,row:8,w:9,h:4},recent:{col:14,row:7,w:5,h:4},preview:{col:6,row:12,w:10,h:2}},hidden:[]},
  gaming:{name:'Gaming',grid:{topbar:{col:16,row:1,w:5,h:1},hero:{col:2,row:2,w:9,h:2},clock:{col:16,row:2,w:4,h:2},addressbar:{col:3,row:5,w:16,h:1},shortcuts:{col:2,row:7,w:17,h:4},recent:{col:14,row:12,w:5,h:2},preview:{col:2,row:12,w:11,h:2}},hidden:['recent']},
@@ -65,7 +65,7 @@ function defaults(){return {version:VERSION,prefs:{
  effects:{snow:false,rain:false,stars:false,particles:false,fireflies:false,orbs:false,aurora:false,fog:false,matrix:false,bubbles:false,shooting:false,waves:false,rgbGlow:false,dust:false,constellation:false,clouds:false,digitalGrid:false,neonHorizon:false,liquid:false,lightRays:false,spaceDust:false},
  rainLightning:false,rainGlass:false,
  cursorStyle:'default',cursorSize:18,cursorColor:'#6ec1ff',cursorSecondary:'#d6dbe6',cursorGlow:35,cursorTrail:8,cursorTrailFade:70,cursorSmoothing:.2,cursorRGBSpeed:8,
- layoutPreset:'minimal',layoutGrid:clone(layoutPresets.minimal.grid),layoutHidden:clone(layoutPresets.minimal.hidden),layoutLocked:true,mobileAutoLayout:true,
+ layoutPreset:'centered',layoutGrid:clone(layoutPresets.centered.grid),layoutHidden:clone(layoutPresets.centered.hidden),layoutLocked:true,mobileAutoLayout:true,
  showSubtitle:true,showClock:true,showShortcuts:true,showRecent:true,showPreview:true,showBack:true,showForward:true,showRefresh:true,showHome:true,showExternal:true,
  restorePreviousTabs:true,showBookmarksBar:true,showBookmarkFavicons:true,showBookmarkText:true,compactTabs:true,bookmarkOpenBehavior:'current',confirmCloseMultiple:true,blockAds:true,
  clock24:false,clockSeconds:false,showDate:true,commandPalette:true,keyboardShortcuts:true

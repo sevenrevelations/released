@@ -1,8 +1,8 @@
-# blobby.vip v8.2 — MIT App Inventor setup
+# pangas.lab v8.2 — MIT App Inventor setup
 
-blobby.vip is the **full-screen Home/New Tab page**. The real website appears only after navigation. While browsing, `WebViewer_UI` collapses to compact tabs/navigation/bookmarks and `WebViewer_Browser` fills the rest of the app.
+pangas.lab is the **full-screen Home/New Tab page**. The real website appears only after navigation. While browsing, `WebViewer_UI` collapses to compact tabs/navigation/bookmarks and `WebViewer_Browser` fills the rest of the app.
 
-v8.2 explicitly sends `HOME` on startup so App Inventor hides `WebViewer_Browser` and shows blobby.vip first.
+v8.2 explicitly sends `HOME` on startup so App Inventor hides `WebViewer_Browser` and shows pangas.lab first.
 
 ## Designer
 
@@ -17,7 +17,7 @@ Screen1
 - Width: Fill parent
 - Height: Fill parent
 - Visible: true
-- HomeUrl: your GitHub Pages blobby.vip URL
+- HomeUrl: your GitHub Pages pangas.lab URL
 
 ### WebViewer_Browser
 - Width: Fill parent
@@ -118,7 +118,7 @@ No extra Designer components are required for:
 - Theme integration
 - Responsive browser chrome
 
-All of that stays in the GitHub-hosted blobby.vip UI.
+All of that stays in the GitHub-hosted pangas.lab UI.
 
 
 ## Persistent tabs in v8.2
@@ -126,7 +126,7 @@ No new App Inventor blocks are required. `WebViewer_UI` still fills the screen i
 
 ## Community Chat overlay
 
-The included `chat.js` uses the same UI expansion behavior already used by blobby.vip settings. No new App Inventor components are required.
+The included `chat.js` uses the same UI expansion behavior already used by pangas.lab settings. No new App Inventor components are required.
 
 When Chat opens while an external site is active, `WebViewer_UI` is temporarily expanded with `UI_HEIGHT|-2` so the sidebar is usable. Closing Chat restores the normal browser-chrome height. The existing real `WebViewer_Browser` navigation/history logic is unchanged.
 
